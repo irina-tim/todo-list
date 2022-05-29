@@ -8,7 +8,10 @@
       </form>
     </header>
     <div class="list">
-      <h2 class="list__header">To Do</h2>
+      <h2 class="list__header">
+        <span class="list__header-title">To Do</span>
+        <span class="list__header-counter">{{ todos.length }}</span>
+      </h2>
       <ul class="list__container">
         <li class="list__element" v-for="(todo, i) in todos" :key="todo.id">
           <input class="list__element-checkbox" type="checkbox" v-on:change="mark(i, true)">
@@ -18,7 +21,10 @@
       </ul>
     </div>
     <div class="list">
-      <h2 class="list__header">Done</h2>
+      <h2 class="list__header">
+        <span class="list__header-title">Done</span>
+        <span class="list__header-counter">{{ completed.length }}</span>
+      </h2>
       <ul class="list__container">
         <li class="list__element" v-for="(todo, i) in completed" :key="todo.id">
           <input class="list__element-checkbox" type="checkbox" v-on:change="mark(i, false)" checked>
