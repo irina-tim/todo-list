@@ -13,9 +13,19 @@
         <span class="list__header-counter">{{ todos.length }}</span>
       </h2>
       <ul class="list__container">
-        <li class="list__element" v-for="(todo, i) in todos" :key="todo.id">
+        <li class="list__element" v-for="(todo, i) in todos" :key="todo.id" :class="{ list__element_editing: todo === editedTodo }">
           <input class="list__element-checkbox" type="checkbox" v-on:change="mark(i, true)">
           <label class="list__element-label" @dblclick="editTodo(todo)">{{ todo.title }}</label>
+          <input
+            v-if="todo === editedTodo"
+            class="list__element-edit"
+            type="text"
+            v-model="todo.title"
+            @vnode-mounted="({ el }) => el.focus()"
+            @blur="doneEdit(todo, 'todos')"
+            @keyup.enter="doneEdit(todo, 'todos')"
+            @keyup.escape="cancelEdit(todo)"
+          >
           <button class="list__element-remove-button" @click="removeTodo(todo, 'todos')">X</button>
         </li>
       </ul>
@@ -45,7 +55,8 @@ export default {
   data: () => ({
     todos: [],
     completed: [],
-    inputValue: ''
+    inputValue: '',
+    editedTodo: null
   }),
 
   /* eslint-disable */
@@ -70,12 +81,30 @@ export default {
         this.completed.splice(this.completed.indexOf(todo), 1)
     },
 
-    mark (i, done) {
+    mark(i, done) {
       done ? 
         this.completed.push(...this.todos.splice(i, 1)) : 
         this.todos.push(...this.completed.splice(i, 1));
     },
 
+    editTodo(todo) {
+      this.todoBeforeEdit = todo.title;
+      this.editedTodo = todo;
+    },
+
+    doneEdit(todo, listType) {
+      if (!this.editedTodo) { return }
+      this.editedTodo = null;
+      todo.title = todo.title.trim();
+      if (!todo.title) {
+        this.removeTodo(todo, listType);
+      }
+    },
+
+    cancelEdit(todo) {
+      this.editedTodo = null;
+      todo.title = this.todoBeforeEdit;
+    }
   }
 }
 </script>
