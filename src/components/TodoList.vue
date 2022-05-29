@@ -10,18 +10,21 @@
     <div class="list">
       <h2 class="list__header">To Do</h2>
       <ul class="list__container">
-        <li class="list__element" v-for="todo in todos" :key="todo.id">
+        <li class="list__element" v-for="(todo, i) in todos" :key="todo.id">
+          <input class="list__element-checkbox" type="checkbox" v-on:change="mark(i, true)">
           <label class="list__element-label" @dblclick="editTodo(todo)">{{ todo.title }}</label>
-            <button class="list__element-remove-button" @click="removeTodo(todo)">X</button>
+          <button class="list__element-remove-button" @click="removeTodo(todo, 'todos')">X</button>
         </li>
       </ul>
     </div>
     <div class="list">
       <h2 class="list__header">Done</h2>
       <ul class="list__container">
-          <li class="list__element"> Todo 1 </li>
-          <li class="list__element"> Todo 2 </li>
-          <li class="list__element"> Todo 3 </li>
+        <li class="list__element" v-for="(todo, i) in completed" :key="todo.id">
+          <input class="list__element-checkbox" type="checkbox" v-on:change="mark(i, false)" checked>
+          <label class="list__element-label" @dblclick="editTodo(todo)">{{ todo.title }}</label>
+          <button class="list__element-remove-button" @click="removeTodo(todo, 'completed')">X</button>
+        </li>
       </ul>
     </div>
     <footer class="footer">
@@ -39,7 +42,7 @@ export default {
     inputValue: ''
   }),
 
-/* eslint-disable */
+  /* eslint-disable */
   methods: {
     handleInput (e) {
       this.inputValue = e.target.value.trim();
@@ -50,14 +53,23 @@ export default {
       if (!this.inputValue) { return };
       this.todos.push({
         id: Date.now(),
-        title: this.inputValue,
+        title: this.inputValue
       })
       this.inputValue = '';
     },
 
-    removeTodo(todo) {
-      this.todos.splice(this.todos.indexOf(todo), 1)
-    }
+    removeTodo(todo, listType) {
+      listType === 'todos' ?
+        this.todos.splice(this.todos.indexOf(todo), 1) :
+        this.completed.splice(this.completed.indexOf(todo), 1)
+    },
+
+    mark (i, done) {
+      done ? 
+        this.completed.push(...this.todos.splice(i, 1)) : 
+        this.todos.push(...this.completed.splice(i, 1));
+    },
+
   }
 }
 </script>
