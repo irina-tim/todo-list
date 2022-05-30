@@ -3,8 +3,18 @@
     <header class="header">
       <h1 class="header__title">TODO list</h1>
       <form class="header__form">
-        <input class="header__input" placeholder="What needs to be done?" @keyup.enter="addTask" v-bind:value="inputValue" v-on:input="handleInput">
-        <button class="header__button" type="submit" v-on:click="addTask">Add new task</button>
+        <input
+          class="header__input"
+          placeholder="What needs to be done?"
+          @keyup.enter="addTask"
+          v-bind:value="inputValue"
+          v-on:input="handleInput">
+        <button
+          class="header__button button"
+          type="submit"
+          v-on:click="addTask">
+          Add new task
+        </button>
       </form>
     </header>
     <List
@@ -99,4 +109,70 @@
 </script>
 
 <style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 30px;
+  }
+
+  .header {
+    text-align: center;
+    width: 60%;
+    background-color: white;
+    margin: 20px 0;
+    padding-bottom: 20px;
+  }
+
+  .header__title {
+    margin: 20px 0 20px;
+    color: #0067B9;
+    font-family: Arial, sans-serif;
+    font-weight: 800;
+  }
+
+  .header__button {
+    padding: 10px 20px;
+  }
+
+  .button {
+    background-image: linear-gradient(#42A1EC, #0070C9);
+    border: 1px solid #0077CC;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    font-family: Arial,sans-serif;
+    font-size: 17px;    
+    text-align: center;
+  }
+
+  .button:disabled {
+    cursor: default;
+    opacity: .3;
+  }
+
+  .button:hover {
+    background-image: linear-gradient(#51A9EE, #147BCD);
+    border-color: #1482D0;
+    text-decoration: none;
+  }
+
+  .button:active {
+    background-image: linear-gradient(#3D94D9, #0067B9);
+    border-color: #006DBC;
+    outline: none;
+  }
+
+  .header__input {
+    font-size: 17px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    box-shadow: rgba(131, 192, 253, 0.5) 0 0 0 3px;
+    margin-right: 10px;
+    min-width: 200px;
+    width: 40%;
+  }
+
 </style>

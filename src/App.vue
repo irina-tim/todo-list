@@ -13,3 +13,11 @@ export default {
   }
 }
 </script>
+
+<style>
+  body {
+    background-color: #42A1EC;
+    margin: 0;
+    height: 100vh;
+  }
+</style>
