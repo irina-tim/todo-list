@@ -2,6 +2,8 @@
 
 Simple TODO-list on Vue.js
 
+![todo5](https://user-images.githubusercontent.com/94538863/170922400-4a81f400-7e6c-4db0-a2b4-5c5d9a9bf5f1.gif)
+
 ## Instructions
 
 Clone repository:
