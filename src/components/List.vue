@@ -18,7 +18,7 @@
             v-on:change="$emit('mark', i, listName === 'todos')"
             :checked="listName !== 'todos'"
           />
-          <label class="list__element-label" @dblclick="$emit('editTodo', todo)">
+          <label class="list__element-label" @dblclick="handleLabelDbclick(todo)">
             {{ todo.title }}
           </label>
           <input
@@ -26,10 +26,10 @@
             class="list__element-edit"
             type="text"
             v-model="todo.title"
-            @vnode-mounted="({ el }) => { el.focus() }"
             @blur="$emit('doneEdit', todo, listName)"
             @keyup.enter="$emit('doneEdit', todo, listName)"
             @keyup.escape="$emit('cancelEdit', todo)"
+            ref="edit"
           />
         </div>
         <button
@@ -44,8 +44,18 @@
 </template>
 
 <script type="text/javascript">
+/* eslint-disable */
 export default {
-  props: ['title', 'listName', 'list', 'editedTodo', 'removeTodo', 'mark', 'editTodo', 'doneEdit', 'cancelEdit']
+  props: ['title', 'listName', 'list', 'editedTodo', 'removeTodo', 'mark', 'editTodo', 'doneEdit', 'cancelEdit'],
+
+  methods: {
+    handleLabelDbclick(todo) {
+      this.$emit('editTodo', todo);
+      this.$nextTick(() => {
+        this.$refs.edit[0].focus();
+      })   
+    },
+  }
 }
 </script>
 
